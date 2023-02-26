@@ -4,10 +4,14 @@
 
 Vagrant.configure("2") do |config|
   
+  config.ssh.insert_key = false
+    
+  config.vm.synced_folder ".", "/vagrant", disabled: true
 
+  # Master node server configuration
   config.vm.define "master" do |master|
     master.vm.box = "geerlingguy/ubuntu1604"
-    master.vm.hostname = "db"
+    master.vm.hostname = "master"
     master.vm.network :private_network, ip: "192.168.50.10"
     master.vm.provider "virtualbox" do |vb|
       vb.name = "master"
@@ -40,25 +44,13 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  # Test Server configuration
-  config.vm.define "tst" do |tst|
-    tst.vm.box = "geerlingguy/centos7"
-    tst.vm.hostname = "tst"
-    tst.vm.network :private_network, ip: "192.168.50.14"
-    tst.vm.provider "virtualbox" do |vb|
-      vb.name = "tst"
-      vb.memory = 1024
-      vb.cpus = 2
-    end
-  end
-
   # Staging Server Configuration 
-  config.vm.define "staging" do |staging|
-    staging.vm.box = "geerlingguy/centos7"
-    staging.vm.hostname = "staging"
-    staging.vm.network :private_network, ip: "192.168.50.15"
-    staging.vm.provider "virtualbox" do |vb|
-      vb.name = "staging"
+  config.vm.define "stage" do |stage|
+    stage.vm.box = "geerlingguy/centos7"
+    stage.vm.hostname = "stage"
+    stage.vm.network :private_network, ip: "192.168.50.15"
+    stage.vm.provider "virtualbox" do |vb|
+      vb.name = "stage"
       vb.memory = 1024
       vb.cpus = 2
     end
