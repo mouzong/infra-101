@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
 
   # Master node server configuration
   config.vm.define "master" do |master|
-    master.vm.box = "geerlingguy/ubuntu1604"
+    master.vm.box = "geerlingguy/centos7"
     master.vm.hostname = "master"
     master.vm.network :private_network, ip: "192.168.50.10"
     master.vm.provider "virtualbox" do |vb|
@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "db" do |db|
     db.vm.box = "geerlingguy/centos7"
     db.vm.hostname = "db"
-    db.vm.network :private_network, ip: "192.168.50.12"
+    db.vm.network :private_network, ip: "192.168.50.11"
     db.vm.provider "virtualbox" do |vb|
       vb.name = "db"
       vb.memory = 1024
@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "dev" do |dev|
     dev.vm.box = "geerlingguy/centos7"
     dev.vm.hostname = "dev"
-    dev.vm.network :private_network, ip: "192.168.50.13"
+    dev.vm.network :private_network, ip: "192.168.50.12"
     dev.vm.provider "virtualbox" do |vb|
       vb.name = "dev"
       vb.memory = 1024
@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "stage" do |stage|
     stage.vm.box = "geerlingguy/centos7"
     stage.vm.hostname = "stage"
-    stage.vm.network :private_network, ip: "192.168.50.15"
+    stage.vm.network :private_network, ip: "192.168.50.13"
     stage.vm.provider "virtualbox" do |vb|
       vb.name = "stage"
       vb.memory = 1024
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
     prod.vm.box = "twistedvines/openshift-4.3.0"
     prod.vm.box_version = "1.0.0"
     prod.vm.hostname = "prod"
-    prod.vm.network :private_network, ip: "192.168.50.16"
+    prod.vm.network :private_network, ip: "192.168.50.14"
     prod.vm.provider "virtualbox" do |vb|
       vb.name = "prod"
       vb.memory = 1024
