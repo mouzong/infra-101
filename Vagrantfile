@@ -4,8 +4,12 @@
 
 Vagrant.configure("2") do |config|
   
+
+  # Plugins settings
+  config.cache.auto_detect = opts['cache']['auto_detect'] 
   config.ssh.insert_key = false
-    
+  config.cache.enable :yum
+  config.vm.box_download_insecure = true
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
   # Master node server configuration
@@ -58,8 +62,9 @@ Vagrant.configure("2") do |config|
 
   # Production Server configuration
   config.vm.define "prod" do |prod|
-    prod.vm.box = "twistedvines/openshift-4.3.0"
-    prod.vm.box_version = "1.0.0"
+    prod.vm.box = "geerlingguy/centos7"
+    # prod.vm.box = "twistedvines/openshift-4.3.0"
+    # prod.vm.box_version = "1.0.0"
     prod.vm.hostname = "prod"
     prod.vm.network :private_network, ip: "192.168.50.14"
     prod.vm.provider "virtualbox" do |vb|
