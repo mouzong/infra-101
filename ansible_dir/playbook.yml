@@ -1,0 +1,13 @@
+- name: ssh keys installation
+  connection: local
+  hosts: localhost
+  roles:
+  - ssh_keygen
+
+
+- name: setting up servers (users, nginx)
+  hosts: all
+  become: yes
+  roles:
+  - ssh_users
+  - nginx

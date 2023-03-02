@@ -49,12 +49,12 @@ Vagrant.configure("2") do |config|
   end
 
   # Staging Server Configuration 
-  config.vm.define "stage" do |stage|
-    stage.vm.box = "geerlingguy/centos7"
-    stage.vm.hostname = "stage"
+  config.vm.define "ubuntu" do |stage|
+    stage.vm.box = "geerlingguy/ubuntu1604"
+    stage.vm.hostname = "ubuntu"
     stage.vm.network :private_network, ip: "192.168.50.13"
     stage.vm.provider "virtualbox" do |vb|
-      vb.name = "stage"
+      vb.name = "ubuntu"
       vb.memory = 1024
       vb.cpus = 2
     end
@@ -72,4 +72,15 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  # Production Server configuration
+  config.vm.define "prod" do |prod|
+    prod.vm.box = "geerlingguy/centos7"
+    prod.vm.hostname = "prod"
+    prod.vm.network :private_network, ip: "192.168.50.14"
+    prod.vm.provider "virtualbox" do |vb|
+      vb.name = "prod"
+      vb.memory = 1024
+      vb.cpus = 2
+    end
+  end
 end

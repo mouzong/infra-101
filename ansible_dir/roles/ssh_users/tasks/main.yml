@@ -1,0 +1,20 @@
+---
+
+- name: creating the user devops
+  user:
+    name: devops
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+    password: "{{ 'password' | password_hash('sha512') }}"
+
+- name: Add devops to sudoers
+  copy:
+    dest: "/etc/sudoers.d/devops"
+    content: "devops  ALL=(ALL)  NOPASSWD: ALL"
+
+- name: Deploy SSH key
+  authorized_key:
+    user: devops
+    key: "{{ lookup('file', '/tmp/andreas.pub')  }}"
+    state: present
