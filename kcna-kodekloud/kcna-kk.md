@@ -158,3 +158,89 @@ when you create a deployment, a ROllout is created `Revision 1`
  - `kubectl config set-context $(kubectl config current-context) --namespace=dev` : Setting the current namespace default to `dev` namespace.  
 
  - To limit resources in a namepace, we create a resource quota.
+
+ ### Labels & Selectors
+ - `kubectl get pods --selector app=myapp` : Get pods with the label app=myapp
+
+ ### Taints and Tolerations
+ - Taints are placed on Nodes and Tolerations are placed on pods to match the tolerations on the nodes, thereby making the scheduling of the pod on this node possible.
+ - `kubectl taint nodes node-name key=value:tain-effect`
+ - taint-effect = [NoSchedule | PreferNoSchedule | NoExecute]  
+ - ex: `kubectl taint nodes node1 app=blue:NoSchedule`
+ - Taint does not restrict a pod to be scheduled on a specific Node, instead it limits node to be tolerant to a certain category of Pods bearing `tolerations`
+
+#### a - NoExecute Taint
+
+ ```yaml
+ # pod-definition.yaml
+ apiVersion: v1
+ kind: Pod
+ metadata:
+   name: myapp-pod
+   labels:
+     tier: fronend
+ spec:
+   containers:
+     - name: nginx-container
+       image: nginx
+
+   tolerations:
+     - key: "app"
+       operator: "Equal"
+       value: "blue"
+       effect: "NoSchedule"
+ # kubectl taint nodes node1 app=blue:NoSchedule
+ # kubectl describe nodes node1 | grep -i Taint
+ ```
+
+### Labels 
+- `kubectl label nodes node1 size=large` : Assigna label to a Node in the Cluster.
+```yaml
+ # pod-definition.yaml
+ apiVersion: v1
+ kind: Pod
+ metadata:
+   name: myapp-pod
+   labels:
+     tier: fronend
+ spec:
+   containers:
+     - name: nginx-container
+       image: nginx
+   nodeSelector:
+     size: large
+   tolerations:
+     - key: "app"
+       operator: "Equal"
+       value: "blue"
+       effect: "NoSchedule"
+ # kubectl taint nodes node1 app=blue:NoSchedule
+ # kubectl describe nodes node1 | grep -i Taint
+ ```
+
+ ### Node Affinity
+ - it provides advanced capabilities to limit the pod placement on specific nodes
+ ```yaml
+ # pod-definition.yaml
+ apiVersion: v1
+ kind: Pod
+ metadata:
+   name: myapp-pod
+ spec:
+   containers:
+     - name: data-processor
+       image: data-processor
+   affinity:
+     nodeAffinity:
+       requiredDuringSchedulingIgnoredDuringExecution:
+         nodeSelectorTerms:
+           - matchExpressions:
+               - key: size
+                 operator: In | NotIn | Exists
+                 values:
+                   - Large
+                   - Medium
+ ```
+#### Types of Node Affinity
+- `requiredDuringSchedulingIgnoredDuringExecution`
+- `preferredDuringSchedulingIgnoredDuringExecution`
