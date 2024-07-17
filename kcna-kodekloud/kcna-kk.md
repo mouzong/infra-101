@@ -13,10 +13,10 @@ A pod is the smallest deployable unit in Kubernetes
 
 ```yaml
 kind - apiVersion: 
-POD - v1
-Service - v1
-ReplicaSet - apps/v1
-Deployment - apps/v1
+POD         - v1
+Service     - v1
+ReplicaSet  - apps/v1
+Deployment  - apps/v1
 ```
 ```yaml
 # pod-definition.yml
@@ -77,21 +77,21 @@ metadata:
   name: myapp-replicaset
   labels:
     app: myapp
-    tier: front-end
 spec:
+  selector:
+    matchLabels:
+      app: myapp
   replicas: 3
   template:
     metadata: 
-      name: nginx-pod
+      name: nginx
       labels:
         app: nginx
     spec:
-    containers:
-      - name: nginx-container
-        image: nginx
-  selector:
-    matchLabels:
-      tier: front-end
+      containers:
+        - name: nginx
+          image: nginx
+  
 
 # kubectl create -f replicaset-definition.yaml
 # kubectl get recplicasets
@@ -101,3 +101,50 @@ spec:
 # kubectl scale --replicas=6 -f replicaset-definition.yaml
 # kubectl scale --replicas=6 replicaset myapp-replicaset
 ```
+### DEPLOYMENTS
+
+```yaml
+depoy-definition.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    tier: frontend
+spec:
+  template:
+    metadata:
+      name: nginx-2
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+  replicas: 6
+  selector:
+    matchLabels:
+      app: myapp
+
+# kubectl run nginx --image=nginx
+# kubectl get all
+# kubectl apply -f deployment-patch.yaml
+# kubectl create -f deployment.yaml
+# kubectl get deployments
+# kubectl set image deployment-name nginx=nginx:1.9.1
+# kubectl rollout status deployement-name
+# kubectl rollout history deployment-name
+# kubectl rollout undo deployment-name
+```
+
+### Deployments: Rolling Updates and Rollbacks
+when you create a deployment, a ROllout is created `Revision 1`
+- `kubectl rollout status <deployment-name>`
+- `kubectl rollout history <deployment-name>`
+
+#### Deployment strategies
+1 - Recreate
+2 - Rolling update [DEFAULT] 
+
+### Imperative & Declaratice approach in kubernetes
+ 
