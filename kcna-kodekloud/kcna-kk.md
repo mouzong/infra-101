@@ -147,4 +147,14 @@ when you create a deployment, a ROllout is created `Revision 1`
 2 - Rolling update [DEFAULT] 
 
 ### Imperative & Declaratice approach in kubernetes
- 
+ The difference between imperative and declarative approach lies in the commands triggered directly from the terminal (imperative) and the commands packed into `.yaml` file which is triggered in bulk. 
+
+ - `kubectl apply -f /path/to/config-files` : cerate objects from multiple fils in a directory at once in bulk
+ - `kubectl expose deployment nginx --type="NodePort" --port 80` : Create a service to expose an nginx deployment
+
+ ### Namespaces
+ Namespaces in kubernets refer to logical divisions for data and resources isolations
+ - `kubectl create namespace dev ` : Creating a new namespace called `dev`
+ - `kubectl config set-context $(kubectl config current-context) --namespace=dev` : Setting the current namespace default to `dev` namespace.  
+
+ - To limit resources in a namepace, we create a resource quota.
