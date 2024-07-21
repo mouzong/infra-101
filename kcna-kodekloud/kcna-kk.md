@@ -306,6 +306,40 @@ spec:
 You can check the kubernetes documentation for more information. after setting up the scheduler correctly we then setup a pod to be scheduled with a `schedulerName:`
 
 ## Container Orchestration - Security
+### Security - Kuberntes Security Primitives
+- Securing hosts mean disabling password based authentication, and allowing only SSH based authentication
+- Authentication : Who can acces the cluster : 
+- Authorization : what can authenticated users do when they access the cluster ?
+- All communication between the kubeapi-server and cluster components is secured using TLS Certificates
+
+### Authentication in K8S Cluster
+- You cvan not create USer usng the k8s api but instead you can create Service Accounts.
+-vAuth mechanisms in kubernetes involve the use of `static Password File`, `Static Token File`, `Certificates`, `Identity Services`
+#### Static Password File
+If you have this user details lists and you want to add them as authorized users on the cluster you need to creats a Static passwod file which is then passed to the `kube-apiserver.service` definition file under the `--basic-auth-file=user-details.csv`. <br>
+
+`user-details.csv : `
+```csv
+password123,user1,u0001
+password123,user2,u0002
+password123,user3,u0003
+```
+To authenticate using user details in curl commend command, use the command below:
+
+`curl -v -k https://master-node-ip:6443/api/v1/pods -u "user1:password123"`
+
+Similarly with the Static Password file we can authenticate using a Static Token File defined like sen below.
+
+
+```csv
+2ada2aa0da79c3c73ab1423731a9bbf7,user1,u0001
+425180db1907b0c046e9a4e08554d074,user2,u0002
+df7d303c45e6c5e2a1fa95c1c947f50e,user3,u0003
+```
+
+For authentication add the `--token-auth-file=user-details.csv` to the kube-apiserver definition service then use the curl request below to authenticate.
+
+`curl -v -k https://://master-node-ip:6443/api/v1/pods --header "Authorization: Beare df7d303c45e6c5e2a1fa95c1c947f50e"`. Add the token to your requests.
 
 ## Container Orchestration - Networking
 
