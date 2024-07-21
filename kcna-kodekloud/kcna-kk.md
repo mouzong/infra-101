@@ -246,7 +246,64 @@ when you create a deployment, a ROllout is created `Revision 1`
 - `preferredDuringSchedulingIgnoredDuringExecution`
 
 ### Multiple Schedulers
+```yaml
+# my-scheduler-2-config.yaml
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+profiles:
+- schedulerName: my-scheduler-2
+```
 
+```yaml
+# my-scheduler-config.yaml
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+profiles:
+- schedulerName: my-scheduler
+```
+
+```yaml
+# scheduler-config.yaml
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+profiles:
+- schedulerName: default-scheduler
+```
+
+To deploy an additional scheduler you need to run a new Pod containing the definition for this new Scheduleras seen below:
+
+```yaml
+# my-scheduler-config.yaml
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+profiles:
+- schedulerName: my-scheduler
+leaderElection:
+  leaderElect: true
+  resourceNamespace: kube-system
+  resourceName: lock-object-my-scheduler
+```
+
+```yaml
+# my-custom-scheduler.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-custom-scheduler
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - usr/local/bin/kube-scheduler
+    - --address=127.0.0.1
+    - --kubeconfig=/etc/kubernetes/scheduler.conf
+    - --config=/etc/kubernetes/my-scheduler-config.yaml
+
+    image: k8s.gcr.io/kube-scheduler-amd:v1.11.3
+    name: kube-scheduler
+```
+
+You can check the kubernetes documentation for more information. after setting up the scheduler correctly we then setup a pod to be scheduled with a `schedulerName:`
 
 ## Container Orchestration - Security
 
