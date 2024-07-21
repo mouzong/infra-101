@@ -244,3 +244,20 @@ when you create a deployment, a ROllout is created `Revision 1`
 #### Types of Node Affinity
 - `requiredDuringSchedulingIgnoredDuringExecution`
 - `preferredDuringSchedulingIgnoredDuringExecution`
+
+### Multiple Schedulers
+
+
+## Container Orchestration - Security
+
+## Container Orchestration - Networking
+
+## Container Orchestration - Service Mesh
+
+## Container Orchestration - Storage
+
+## Cloud Native Architecture
+
+## Cloud Native Observability
+
+## Cloud Native Application Delivery
