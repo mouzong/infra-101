@@ -355,6 +355,56 @@ First thing to do is to setup the Certificate Authority CA
   - `openssl genrsa -out admin.key 2048`
   - `openssl req -new -key admin.key -subj "/CN=kube-admin" -out admin.csr`
   - `openssl x509 -req in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt`
+#### API Groups
+- ``/metrics``
+- ``/healthz``
+- ``/logs``
+- ``/version``
+- ``/api`` : Core group
+- ``/apis`` : Nmamedd group
+
+#### Role Based Access Control
+```yaml
+# developer-role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "get", "create", "update", "delete"]
+- apiGroups: [""]
+  resources: ["Configmap"]
+  verbs: ["create"]
+```
+
+After creating a Role you need to create a Role Binding object to attacht the newly created role to the user.
+```yaml
+# devuser-developer-binding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: devuser-developer-binding
+subjects:
+- kind: User
+  name: dev-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: dev-user
+  apiGroup: rbac.authorization.k8s.io
+
+# kubectl get roles
+# kubectl get rolebindings
+# kubectl describe role developer
+```
+
+You as a user you can check your permissions on the cluster like :
+- `kubectl auth can-i create deployments`
+
+#### Cluster roles
+
 ## Container Orchestration - Networking
 
 ## Container Orchestration - Service Mesh
