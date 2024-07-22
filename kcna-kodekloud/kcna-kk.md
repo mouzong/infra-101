@@ -341,6 +341,20 @@ For authentication add the `--token-auth-file=user-details.csv` to the kube-apis
 
 `curl -v -k https://://master-node-ip:6443/api/v1/pods --header "Authorization: Beare df7d303c45e6c5e2a1fa95c1c947f50e"`. Add the token to your requests.
 
+#### TLS in Kubernetes - certificate Creation
+To generate certifcates in kube cluster we will make use of the OPENSSL tool. <br>
+
+First thing to do is to setup the Certificate Authority CA
+- We start by generating a private key : `openssl genrsa -out ca.key 2048`
+
+- We then generate a certificate signing request : `openssl requ -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr`
+
+- we now sign the certificate : `openssl x509 -req in ca.csr -signkey ca.key -out ca.crt`
+
+- We now genrate the client key for asmin users:
+  - `openssl genrsa -out admin.key 2048`
+  - `openssl req -new -key admin.key -subj "/CN=kube-admin" -out admin.csr`
+  - `openssl x509 -req in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt`
 ## Container Orchestration - Networking
 
 ## Container Orchestration - Service Mesh
