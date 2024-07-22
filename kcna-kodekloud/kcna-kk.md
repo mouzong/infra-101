@@ -403,7 +403,18 @@ roleRef:
 You as a user you can check your permissions on the cluster like :
 - `kubectl auth can-i create deployments`
 
-#### Cluster roles
+#### Service Accounts
+There are two type of accounts in Kubernetes :
+- `user account` : User | Admin | Developer
+- `service account` : Jenkins | prometheus
+
+- To create a Service Account with use the commend: `kubectl create serviceaccount dashboard-sa`. 
+- After a SA is created it generates a token object as well (in older versions of kubernetes).
+
+By default there is a SA for each namepace in the kubernetes Cluster and when you create a POD in the namespace,  you can the token inside the POD mounted at `/var/run/secrets/kuberntes.io/serviceaccount/token. <br>
+
+To decode the token and fin the finformation about it you can simply use the command :
+- `jq -R 'split(".") | select(length > 0) | .[0],.[1] | @base64d | fromjson' <<< eyJhbGci0iJ....`
 
 ## Container Orchestration - Networking
 
