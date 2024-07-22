@@ -449,7 +449,26 @@ spec:
 
 # kubectl create -f nginx-pod.yaml
 ```
+#### Security Contexts
+Security contexts give the possibility to apply extra security measure at both POD or Container level, like specifying the id of the user in a POD the capabilities of this user,...
 
+```yaml
+# ubuntu-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+spec:
+  containers:
+    - name: ubuntu
+      image: ubuntu
+      command: ["sleep", "3600"]
+      securityContext:
+        runAsUser: 1000
+        capabilities: ["MAC_ADMIN"]
+
+# kubectl create -f ubuntu-pod.yaml
+```
 
 ## Container Orchestration - Networking
 
