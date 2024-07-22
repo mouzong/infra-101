@@ -416,6 +416,41 @@ By default there is a SA for each namepace in the kubernetes Cluster and when yo
 To decode the token and fin the finformation about it you can simply use the command :
 - `jq -R 'split(".") | select(length > 0) | .[0],.[1] | @base64d | fromjson' <<< eyJhbGci0iJ....`
 
+#### Securing Images
+HWe working with images in a cluster we need to specify the image registry which we will want to use as source for our container build. for that we need to login to registery and then use the fqdn of the images in the manifest files.
+
+When using a local computer we proceed as follows:
+
+- Login first : `docker login private-registry.io`
+- Run container : `docker run private-registry.io/apps/internal-app`
+
+In the kubernetes cluster you need to create a secert object for the cluster to authenticate against when pulling imges to run the PODS.
+
+```bash
+kubectl create secret docker-registry regcred \
+    --docker-server=private-registry.io \
+    --docker-username=registry-user \
+    --docker-password=registry-password \
+    --docker-email=registry-user@org.com
+```
+
+```yaml
+# nginx-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+spec:
+  containers:
+    - name: nginx
+      image: private-registry.io/apps/internal-app
+  imagePullSecrets:
+    - name: regcred
+
+# kubectl create -f nginx-pod.yaml
+```
+
+
 ## Container Orchestration - Networking
 
 ## Container Orchestration - Service Mesh
