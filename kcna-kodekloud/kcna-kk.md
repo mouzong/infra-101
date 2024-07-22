@@ -470,7 +470,7 @@ spec:
 # kubectl create -f ubuntu-pod.yaml
 ```
 #### Network Policies
-There a re two types of traffic in a kubernetes Cluster :
+There are two types of traffic in a kubernetes Cluster :
 - `Ingress :`Traffic entering a pod
 - `Egress :` Traffic going out 
 
@@ -498,6 +498,18 @@ spec:
 
 
 ## Container Orchestration - Networking
+#### Cluster Networking
+In a kubernetes Cluster ports associated to services are designed as follows: <br>
+| Service | Port |
+|-----|-------|
+| `kube-api`| 6443
+| `kubelet` | 10250
+| `kube-scheduler` | 10259
+| ` ETCD` | 2379
+| ` kube-controller-manager` | 10257 |
+| `services` | 30000 - 32767
+
+#### POD Networking
 
 ## Container Orchestration - Service Mesh
 
