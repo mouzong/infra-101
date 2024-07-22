@@ -469,6 +469,33 @@ spec:
 
 # kubectl create -f ubuntu-pod.yaml
 ```
+#### Network Policies
+There a re two types of traffic in a kubernetes Cluster :
+- `Ingress :`Traffic entering a pod
+- `Egress :` Traffic going out 
+
+```yaml
+# policy-definition.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              name: api-prod
+        ports:
+          - protocol: TCP
+            port: 3306
+```
+
 
 ## Container Orchestration - Networking
 
