@@ -586,8 +586,36 @@ It is a free and opensource service mesh that provides and efficient way to secu
     - Volume Mount `docker run -v data_volume:/var/lib/mysql` => Mounting a Volume from the Docker Host
     - Bind  Mount `docker run -v /data/mysql:/var/lib/mysql`  => Mounting  a folder from the Docker Host
 
-- `docker run --mount type=bind,source=data/mysql:/var/lib/mysqlmysql`
+- `docker run --mount type=bind,source=data/mysql:/var/lib/mysqlmysql`.
 
+### Volume Driver Plugins In Docker
+- Storage Drivers help manage storage on containers : [AUFS|ZFS|BTRFS|DEVICE MAPPER|OVERLAY]
+```yaml
+# pod-definition.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-number-generator
+spec:
+  containers:
+    - image: alpine
+      name: alpine
+      command: ["/bin/sh", "-c"]
+      args: ["shuf -i 0-100 -n 1 >> /opt/number.out;"]
+      volumeMounts:
+      - mountPath: /opt
+        name: data-volume
+
+  volumes:
+    - name: data-volume
+      hostPath:
+        path: /data
+        type: Directory
+    - name: aws-data-volume
+      awsElasticBlockStore:
+        volumeID: <volume-id>
+        fsType: ext4
+```
 ## Cloud Native Architecture
 
 ## Cloud Native Observability
