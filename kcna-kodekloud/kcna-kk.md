@@ -653,6 +653,58 @@ spec:
 # kubectl create -f pvc-definition.yaml
 # kubectl get persistentvolumeclaim
 ```
+
+### Storage Class
+A Storage Class is a way of describing the clases of storage offered by admins.
+
+```yaml
+# sc-definition.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: google-storage
+provisioner: kubernetes.io/gce-pd
+```
+```yaml
+# pvc-definition.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metatdata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: google-storage
+  resources:
+    requests:
+      storage: 500Mi
+  
+# kubectl create -f pvc-definition.yaml
+# kubectl get persistentvolumeclaim
+```
+
+```yaml
+# pod-definition.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-number-generator
+spec:
+  containers:
+    - image: alpine
+      name: alpine
+      command: ["/bin/sh", "-c"]
+      args: ["shuf -i 0-100 -n 1 >> /opt/number.out;"]
+      volumeMounts:
+      - mountPath: /opt
+        name: data-volume
+
+  volumes:
+    - name: data-volume
+      persistenVolumeClaim:
+        claimName: myclaim
+```
+
 ## Cloud Native Architecture
 
 ## Cloud Native Observability
