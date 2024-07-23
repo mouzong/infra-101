@@ -635,6 +635,24 @@ spec:
 # kubectl create -f pv-definition.yaml
 # kubectl get persistentvolume
 ```
+
+### Persitent Volume Claims
+```yaml
+# pvc-definition.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metatdata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+  
+# kubectl create -f pvc-definition.yaml
+# kubectl get persistentvolumeclaim
+```
 ## Cloud Native Architecture
 
 ## Cloud Native Observability
