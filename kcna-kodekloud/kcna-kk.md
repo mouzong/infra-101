@@ -554,8 +554,15 @@ spec:
           mountPath: /pod-data
 ```
 #### Envoy
-Envoy is an open source proxy designed for distributed and microservices architecture. It is a proxy and communication Bus designed for data share between services and systems
- 
+Envoy is an open source proxy designed for distributed and microservices architecture. It is a proxy and communication Bus designed for data share between services and systems.
+
+#### Service Mesh
+A service mesh is adedicated and configurable infrastructure layer that handles the communication between services withouthaving to change the code in the microservice architecture. <br>
+
+With a Service Mesh you can dynamically configure how services talk to each other with a mutuial security config
+
+#### Istio
+It is a free and opensource service mesh tools that provides and efficient way to connect and monitor services in a kubernetes cluster
 ## Container Orchestration - Storage
 
 ## Cloud Native Architecture
