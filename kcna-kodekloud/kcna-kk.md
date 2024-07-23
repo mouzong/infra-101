@@ -573,7 +573,11 @@ It is a free and opensource service mesh that provides and efficient way to secu
 #### Deployonmg Our First Applicatoin on Istio
 - `istioctl analyze`
 - `kubectl label namespace default istio-injection=enabled`
+
 ## Container Orchestration - Storage
+### Storage in Docker
+#### File System
+- when docker is installed in a system it creates a folder structure at `/var/lib/docker`
 
 ## Cloud Native Architecture
 
