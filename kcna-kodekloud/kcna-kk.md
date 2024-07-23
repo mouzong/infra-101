@@ -616,6 +616,25 @@ spec:
         volumeID: <volume-id>
         fsType: ext4
 ```
+### Persistent Volumes in Kubernetes
+A persitent volume is a cluster wide pool of storage volumes configured by an administrator
+```yaml
+# pv-definition.yaml
+apiVersion: v1
+kind: PersistentVolume
+metatdata:
+  name: pv-vol1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  awsElasticBlockStore:
+    volumeID: <volume-id>
+    fsType: ext4
+# kubectl create -f pv-definition.yaml
+# kubectl get persistentvolume
+```
 ## Cloud Native Architecture
 
 ## Cloud Native Observability
