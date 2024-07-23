@@ -557,12 +557,18 @@ spec:
 Envoy is an open source proxy designed for distributed and microservices architecture. It is a proxy and communication Bus designed for data share between services and systems.
 
 #### Service Mesh
-A service mesh is adedicated and configurable infrastructure layer that handles the communication between services withouthaving to change the code in the microservice architecture. <br>
+A service mesh is a dedicated and configurable infrastructure layer that handles the communication between services without having to change the code in the microservice architecture. <br>
 
 With a Service Mesh you can dynamically configure how services talk to each other with a mutuial security config
 
 #### Istio
-It is a free and opensource service mesh tools that provides and efficient way to connect and monitor services in a kubernetes cluster
+It is a free and opensource service mesh that provides and efficient way to secure, connect and monitor services therby bringing universal traffic management, telemetry and security to complexe deployments. Istio works with kubernetes. 
+
+#### Install Istio in a cluster
+- we will use istioctl `istioctl install --set profile=demo -y`. There are many other profile depending on the environment where we want to deploy `[ prod | stage | dev | demo ]`
+- istio is then installed as a deployemnt called `istiod` in a new namespace called `istio-system`
+- it also deploy two services called: `istio-ingressgateway` and `istio-egressgateway`
+- after installation verify the setup with the command `istio verify-install`
 ## Container Orchestration - Storage
 
 ## Cloud Native Architecture
