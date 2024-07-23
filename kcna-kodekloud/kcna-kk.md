@@ -579,6 +579,15 @@ It is a free and opensource service mesh that provides and efficient way to secu
 #### File System
 - when docker is installed in a system it creates a folder structure at `/var/lib/docker`
 
+- `docker volume create data_volume` :  creates a folder in the folder `/var/lib/docker/volumes/data_volume`. This folder is termed `Persistent Volume`.
+- `docker run -v data_volume:/var/lib/mysql mysql` : Run a MySQL database container with a volume mounted for data storage.
+
+- There are two types of mounting in docker :
+    - Volume Mount `docker run -v data_volume:/var/lib/mysql` => Mounting a Volume from the Docker Host
+    - Bind  Mount `docker run -v /data/mysql:/var/lib/mysql`  => Mounting  a folder from the Docker Host
+
+- `docker run --mount type=bind,source=data/mysql:/var/lib/mysqlmysql`
+
 ## Cloud Native Architecture
 
 ## Cloud Native Observability
