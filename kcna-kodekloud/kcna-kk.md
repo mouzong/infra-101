@@ -510,9 +510,52 @@ In a kubernetes Cluster ports associated to services are designed as follows: <b
 | `services` | 30000 - 32767
 
 #### POD Networking
-
+#### Ingress Controller
+```yaml
+apiVersion: extension/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: nginx-ingress
+  template:
+    metadata:
+      labels:
+        name: nginx-ingress
+    spec:
+      containers:
+        - name: nginx-ingress-controller
+          image: quay.io
+```
 ## Container Orchestration - Service Mesh
+#### Sidecars
+Containers are encapsulated in pods and each pod can have one or more containers called sidecars. They share thesame network, memory and cpu resources with the main container in the POD
 
+```yaml
+# pod-definition.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-sidecar
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+      volumeMounts:
+        - name: shared-data
+          mountPath: /usr/share/nginx/html
+    - name: sidecar-container
+      image: fluent/fluentd
+      volumeMounts:
+        - name: shared-data
+          mountPath: /pod-data
+```
+#### Envoy
+Envoy is an open source proxy designed for distributed and microservices architecture. It is a proxy and communication Bus designed for data share between services and systems
+ 
 ## Container Orchestration - Storage
 
 ## Cloud Native Architecture
