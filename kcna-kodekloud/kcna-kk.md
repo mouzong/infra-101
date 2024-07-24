@@ -792,6 +792,8 @@ spec:
 ```
 
 #### Vertical Pod Autoscaler
+- VPA recommender hits the metrics server to check and recommend the optimal resources for the pod then VPA Updater checks if the recommended resources match the current state of the Pod then the VPA Admission Controller takes action to update the new resources.
+- VPA is not availbale on the cluster by default, yOu need to install and enable it before you can use it.
 ## Cloud Native Observability
 
 ## Cloud Native Application Delivery
