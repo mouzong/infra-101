@@ -798,7 +798,7 @@ spec:
 #### Cluster Autoscaler
 The cluster autoscaler scales up the cluster by adding extra nodes when there is lack of resources for Pod scheduling on the existing nondes.
 
-#### Serverless
+#### Kubernetes Enhancement Proposals (KEP's)
 
 ## Cloud Native Observability
 
