@@ -245,6 +245,38 @@ when you create a deployment, a ROllout is created `Revision 1`
 - `requiredDuringSchedulingIgnoredDuringExecution`
 - `preferredDuringSchedulingIgnoredDuringExecution`
 
+### RESOURCE LIMITS
+```txt
+- 1 CPU : 1 AWS vCPU | 1 GCP Core | 1 Azure Core | 1 Hyperthread
+
+- 256 Mi : 
+```
+
+### DAEMON SET
+A DaemonSet ensures there is always an instance of a POD running on every node in the cluster
+```yaml
+# daemon-set-definition.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: monitoring-daemon
+spec:
+  selector:
+    matchLabels:
+      app: monitoring-agent
+  template:
+    metadata:
+      labels:
+        app: monitoring-agent
+    spec:
+      containers:
+        - name: monitoring-agent
+          image: monitoring-agent
+
+# kubectl create -f daemon-set-definition.yaml
+# kubectl get daemonsets
+```
+
 ### Multiple Schedulers
 ```yaml
 # my-scheduler-2-config.yaml
@@ -706,7 +738,60 @@ spec:
 ```
 
 ## Cloud Native Architecture
+#### Horizontal Pod AutoScaler
+```yaml
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp
+          image: myapp:latest
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+```
 
+
+```yaml
+# hpa.yaml
+apiversion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: myapp-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: myapp
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50 
+# kubectl create -f hpa.yaml
+# kubectl get hpa
+# kubectl delete hpa
+```
+
+#### Vertical Pod Autoscaler
 ## Cloud Native Observability
 
 ## Cloud Native Application Delivery
