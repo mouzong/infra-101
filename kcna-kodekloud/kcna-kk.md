@@ -809,4 +809,26 @@ The cluster autoscaler scales up the cluster by adding extra nodes when there is
 4. Monitor performance of an application
 5. Improve cross-team collaboration
 ```
+
+#### SLO / SLA / SLI
+- `Service Level Indicator (SLI) ` : It is a quantitative measure of some aspect of the level of service that is provided <br>
+
+Common SLIs: <br>
+1. Request Latency
+2. Error Rate
+3. Saturation
+4. Throughput
+5. Availability
+
+Not all metrics are good SLIs. SLIs are based upon User experience measurable metrics.
+
+- `Service Level Object (SLO) ` : It is a target value for an SLI. SLOs should be directly related to the customer experience. the main purpose of the SLO is to quantify the reliability of a product to a customer.
+1. SLI - Latency <br>
+   SLO - Latency < 100ms
+
+2. SLI - Availability <br>
+   SLO - 99.9% uptime
+
+- `Service Level Agreement (SLA) ` : It is a contract between a vendor and a user that guarantees a certain SLO. The consequencies of not meeting any SLO can be financial based but can also be a varity of othe thi gs as well.
+
 ## Cloud Native Application Delivery
