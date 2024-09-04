@@ -85,11 +85,25 @@ spec:
       containers:
         - image: nginx
           name: nginx-controller
+
+# kubectl explain replicaset : get informationa about how to setup a replicaset
 # kubectl create -f replicaset-definition.yml
 # kubectl get replicaset
 # kubectl replace -f replicaset-definition.yml
 # kubectl replace --replicas=6 -f replcaset-definition.yml
 # kubectl scale rs --replicas=6 myapp-replicaset
+```
+
+### Deployments
+```yml
+apiVersion:
+kind: Deployment
+metadata:
+  name:
+  labels:
+
+spec:
+  
 ```
 
 ## 2 - Configuration
