@@ -134,7 +134,7 @@ spec:
     requests.memory: 5Gi
     limits.cpu: "10"
     limits.memory: 10Gi
-
+# kubectl create -f compute-quota.yml
 ```
 
 ## 2 - Configuration
