@@ -162,6 +162,24 @@ kubectl create service nodeport nginx --tcp=80:80 --node-port=30080 --dry-run=cl
 
 
 ```
+
+### Certification Tip: Formatting Output with kubectl
+```yaml
+kubectl create namespace test-123 --dry-run -o json
+
+kubectl create namespace test-123 --dry-run -o yaml
+
+kubectl get pods -o wide
+
+Here are some of the commonly used formats:
+
+-o json : Output a JSON formatted API object.
+-o name : Print only the resource name and nothing else.
+-o wide : Output in the plain-text format with any additional information.
+-o yaml : Output a YAML formatted API object.
+
+
+```
 ## 2 - Configuration
 
 
