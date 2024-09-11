@@ -181,7 +181,23 @@ Here are some of the commonly used formats:
 
 ```
 ## 2 - Configuration
+### Define, build and modify container images
+```Dockerfile
+#Dockerfile
+FROM Ubuntu
 
+RUN apt-get update && apt-get install python
+
+RUN pip install flask && pip install flask-mysql
+
+COPY . /opt/source-code
+
+ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
+
+# docker build Dockerfile -t fryker/my-custom-app
+# docker push fryker/my-custom-app
+# docker history fryker/my-custom-app
+```
 
 ## 3 - Multi-Container Pods
 
