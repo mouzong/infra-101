@@ -199,6 +199,30 @@ ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
 # docker history fryker/my-custom-app
 ```
 
+### Commands and Arguments In Docker
+```Dockerfile
+FROM Ubuntu
+
+# default program that runs when the container starts
+ENTRYPOINT ["sleep"] 
+
+# deafualt arguments that are passed to the propgram if no external args are specified
+CMD ["5"]
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper
+
+spec:
+  containers:
+    - name: ubuntu-sleeper
+      image: ubuntu-sleeper
+      command: ["sleep2.0"] # overriding the ENTRYPOINT from Dockerfile
+      args: ["10"] # Overiding the CMD from Dockerfile definition file
+```
 ## 3 - Multi-Container Pods
 
 ## 4 - Observability 
