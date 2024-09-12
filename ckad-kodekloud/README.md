@@ -223,6 +223,38 @@ spec:
       command: ["sleep2.0"] # overriding the ENTRYPOINT from Dockerfile
       args: ["10"] # Overiding the CMD from Dockerfile definition file
 ```
+
+### ConfigMaps
+`kubectl create configmap app-config --from-literal=APP_COLOR=blue --from-literal=APP_MOD=prod`
+
+```yaml
+# config-map.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  APP_COLOR: blue
+  APP_MODE: prod
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-webapp-color
+  labels:
+    name: simple-webapp-color
+spec:
+  containers:
+  - name: simple-webapp-color
+    image: simple-webapp-color
+    ports:
+      - containerPort: 8080
+    envFrom:
+      - configMapRef:
+          name: app-config
+```
 ## 3 - Multi-Container Pods
 
 ## 4 - Observability 
