@@ -255,6 +255,42 @@ spec:
       - configMapRef:
           name: app-config
 ```
+
+### Kubernetes Secrets
+
+To inject a secret in a pod you need to add an env variable.
+with the created secret.
+
+```yaml
+#secret-data.yml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+data:
+  DB_HOST: MTkyLjE2OC41Ni4xMDA=
+  DB_USER: cm9vdA==
+  DB_PASSWORD: MTkyLjE2OC41Ni4xMDA=
+```
+
+```yaml
+# pod-defition.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-webapp-color
+  labels:
+    name: simple-webapp-color
+spec:
+  containers:
+    - name: simple-webapp-color
+      image: simple-webapp-color
+      ports:
+        - containerPort: 8080
+      envFrom:
+        - secretRef:
+            name: app-secret
+```
 ## 3 - Multi-Container Pods
 
 ## 4 - Observability 
