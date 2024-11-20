@@ -291,6 +291,79 @@ spec:
         - secretRef:
             name: app-secret
 ```
+
+### Resource Requirements
+To specify the resources needed by a pod we need to add a `resources` section.
+```yaml
+# pod-defition.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-webapp-color
+  labels:
+    name: simple-webapp-color
+spec:
+  containers:
+    - name: simple-webapp-color
+      image: simple-webapp-color
+      ports:
+        - containerPort: 8080
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: 1
+        limits:
+          memory: "2Gi"
+          cpu: 2
+```
+A container can not use  resources beyond the set limits. By defult k8s does not have a resources limits set on pods. The best way to schedule is setting cpu requests without limits.
+
+- resource cpu :
+![Resource-CPU](img/resource-cpu.png)
+
+- resource memory :
+![Resource-Memory](img/resource-memory.png)
+
+- We can set the default behaviour of our cluster on the allocation of resources by specifying limit ranges. This is applicable at the namespace level
+
+```yaml
+#limit-range-cpu.yaml
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-resource-constraints
+spec:
+  limits:
+  - default:
+      cpu: 500m
+    defaultRequest:
+      cpu: 500m
+    max:
+      cpu: "1"
+    min:
+      cpu: 100m
+    type: Container
+```
+
+```yaml
+#limit-range-memory.yaml
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: memory-resource-constraints
+spec:
+  limits:
+  - default:
+      memory: 1Gi
+    defaultRequest:
+      memory: 1Gi
+    max:
+      memory: 1Gi
+    min:
+      memory: 500Mi
+    type: Container
+```
+
 ## 3 - Multi-Container Pods
 
 ## 4 - Observability 
