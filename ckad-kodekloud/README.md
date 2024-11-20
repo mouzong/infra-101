@@ -363,7 +363,35 @@ spec:
       memory: 500Mi
     type: Container
 ```
+### Service Accounts
+There are two type of accounts in kubernetes:
+ 
+ - User Account :  USed by humans (admin, developer)
+ - Service Account : Used by applications (Jenkins, Prometheus, Argo)
+ 
+ When you create a Service Account, a secret token object is also created and associated to it directly and this token is used to authenticate external application which will perform actions on the cluster based on the RBAC policy attached to this Service Account. By default in the k8s cluster there is a Service Account which is mounted on each and every pod created. but the default behaviour can be changed.
 
+ ```bash
+ #create a service account
+ kubectl create serviceaccount dashboard-sa
+ 
+ # get all service accounts
+ kubectl get serviceaccount
+
+# decode a tokenusing jq
+ jq -R 'split(".") | select(length > 0) | .[0],.[1] | @base64 | fromjson' <<< tokenashIUWHEwedaduih34q923485.....
+ ```
+
+ By default in the recent kubernetes version when you create a service account it is not associated with a token, if you want to create a token and attach it to a service account , use the tempate below:
+ ```yaml
+ apiVersion: v1
+ kind: Secret
+ type: kubernetes.io/service-account-token
+ metadata:
+   name: jenkins-secret
+   annotations:
+     kubernetes.io/service-account.name: jenkins-sa
+ ``` 
 ## 3 - Multi-Container Pods
 
 ## 4 - Observability 
