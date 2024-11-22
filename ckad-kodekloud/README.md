@@ -392,6 +392,42 @@ There are two type of accounts in kubernetes:
    annotations:
      kubernetes.io/service-account.name: jenkins-sa
  ``` 
+### Taints and Tolerations
+Taints are set on nodes and tolerations are set on PODS :
+#### Taints 
+```bash
+
+kubectl taint nodes <node-name> <key>=<value>:<taint-effect>
+# taint-effect : NoSchedule | PreferNoSchedule | NoExecute
+
+# put a taint on the node01
+kubectl taint nodes node1 app=blue:NoSchedule
+
+# remove a taint from the node01
+kubectl taint nodes node01 app=blue:NoSchedule-
+```
+
+#### Tolerations
+```yaml
+#pod-definition.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
+  
+  tolerations:
+  - key: "app"
+    operator: "Equal"
+    value: "blue"
+    effect: "NoSchedule"
+```
+
+### Node selector
+
 ## 3 - Multi-Container Pods
 
 ## 4 - Observability 
