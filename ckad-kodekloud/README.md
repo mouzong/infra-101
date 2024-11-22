@@ -427,6 +427,29 @@ spec:
 ```
 
 ### Node selector
+Node selectors are put in place to restrict the nodes on which a pod can be scheduled. but before then the nodes have to be labeled as follows:
+```bash
+kubectl label nodes <node-name> <label-key>=<label-value>
+
+# example
+kubectl label nodes node01 size=Large
+```
+
+For the selector to operate, special tag needs to be added on the spec
+```yaml
+#pod-definition.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: data-processing-pod
+spec:
+  containers:
+  - name: data-processor
+    image: data-processor
+  nodeSelector:
+    size: Large
+
+```
 
 ## 3 - Multi-Container Pods
 
