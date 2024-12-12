@@ -260,4 +260,8 @@ spec:
 # kubectl get all
 ```
 
+### Services
 
+Service help cnnect application with other apps and make them available outsite the clusters,
+
+![Service - NodePort](img/services-nodeport.png)
