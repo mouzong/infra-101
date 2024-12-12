@@ -125,7 +125,7 @@ The ReplicaSet works on the same basis as the ReplicationController, the sole di
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: myapp-rs
+  name: myapp-replicaset
   labels:
     app: myapp
     type: front-end
@@ -147,4 +147,17 @@ spec:
       type: front-end
 
 # kubectl create -f rs-definition.yaml
+```
+
+Useful commands for managing replicaset:
+```bash
+kubectl create -f rs-definition.yaml
+
+kubectl get replicaset
+
+kubectl delete replicaset myapp-rs
+
+kubectl replace -f rs-definition.yaml
+
+kubectl scale --replicas=6 -f rs-definition.yaml
 ```
