@@ -225,5 +225,39 @@ kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o y
 ```
 
 ### Deployments 
+The deployment is very similar to the replicaset. The sole differenceis the kind.
+When a Deploymentis created, it automatically creates a replicatset which inturn cretaes the Pods
+
+```yaml
+# deployment-definition.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-replicaset
+  labels:
+    app: myapp
+    type: front-end
+
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+  selector:
+    matchLabels:
+      type: front-end
+
+# kubectl create -f deployment-definition.yaml
+
+# to get all the created resources :
+# kubectl get all
+```
 
 
