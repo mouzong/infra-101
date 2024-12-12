@@ -309,3 +309,5 @@ spec:
     app: myapp
     type: backend
 ```
+
+#### Service - LoadBalancer
