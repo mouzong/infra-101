@@ -262,6 +262,7 @@ spec:
 
 ### Services
 
+#### Service - NodePort
 Service help cnnect application with other apps and make them available outsite the clusters,
 
 ![Service - NodePort](img/services-nodeport.png)
@@ -285,3 +286,26 @@ spec:
 ```
 
 To match POds on a service we need to pull the labels from the port to the selector of the service.
+
+#### Service - ClusterIP
+
+![Service - ClusterIP](img/service-clusterip.png)
+
+A ClusterIP service is the default type of service when you create a service in the kubernetes cluster. It is used to ensure communication between internal groups of pods 
+```yaml
+# service-definition.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+
+spec:
+  type: ClusterIP
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector:
+    app: myapp
+    type: backend
+```
