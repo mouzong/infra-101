@@ -265,3 +265,23 @@ spec:
 Service help cnnect application with other apps and make them available outsite the clusters,
 
 ![Service - NodePort](img/services-nodeport.png)
+
+```yaml
+# service-definition.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector:
+    app: myapp
+    type: front-end
+```
+
+To match POds on a service we need to pull the labels from the port to the selector of the service.
