@@ -93,6 +93,7 @@ kubectl exec etcd-controlplane -n kube-system -- sh -c "ETCDCTL_API=3 etcdctl ge
 
 ### ReplicaSet and Replication Controller
 A replication controller ensures that nomber of pods is always runnig for a given Pod template. It is the old way of representing the replication. As of now the new way of ensuring the replication of Pods is the implementation of ReplicaSet
+
 ```yaml
 # rc-definition.yaml
 apiVersion: v1
@@ -117,4 +118,33 @@ spec:
         image: nginx
 
 # kubectl create -f rc-definition.yaml
+```
+The ReplicaSet works on the same basis as the ReplicationController, the sole difference between them is tha in the ReplicaSetwe have `selector:` which makes the matching of the labels between the ReplicaSet and the Pods it is monitoring.
+```yaml
+# rs-definition.yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-rs
+  labels:
+    app: myapp
+    type: front-end
+
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+  selector:
+    matchLabels:
+      type: front-end
+
+# kubectl create -f rs-definition.yaml
 ```
