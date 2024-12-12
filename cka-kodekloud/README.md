@@ -151,13 +151,21 @@ spec:
 
 Useful commands for managing replicaset:
 ```bash
+# request infos about ReplicaSet declaration in the manifest
+kubectl explain replicaset
+
+# Create new replicaset from declarative manifest
 kubectl create -f rs-definition.yaml
 
+# get all replicaset in the current namespace and context
 kubectl get replicaset
 
+# delete replicaset
 kubectl delete replicaset myapp-rs
 
+# edit replicatset using manifest file
 kubectl replace -f rs-definition.yaml
 
+# scale the replicaset to the desired number of pods
 kubectl scale --replicas=6 -f rs-definition.yaml
 ```
