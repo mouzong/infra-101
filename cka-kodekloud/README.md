@@ -333,3 +333,13 @@ There are two modes of scheduling : `manual` & `automated`
 
 #### Manual Scheduling
 When you create a pod in the CLuster, check whether or not the scheduler is present and well setup. This in case the pod remains in pending state.
+
+### Labels & Selectors
+Labels are assigned to objects when creating them and selectors a re used to retriev the labels based on the match.
+
+```bash
+# get all pods in the frontend tier
+kubectl get pods -l tier=frontend
+
+kubectl get pods --selectors tier=frontend
+```
