@@ -341,5 +341,5 @@ Labels are assigned to objects when creating them and selectors a re used to ret
 # get all pods in the frontend tier
 kubectl get pods -l tier=frontend
 
-kubectl get pods --selectors tier=frontend
+kubectl get pods --selector tier=frontend
 ```
