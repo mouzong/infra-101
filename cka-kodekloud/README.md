@@ -311,3 +311,8 @@ spec:
 ```
 
 #### Service - LoadBalancer
+
+```bash
+# Cretae a pod and a service associated to it in one shot
+kubectl run httpd --image=httpd:alpine --port=80 --expose=true
+````
