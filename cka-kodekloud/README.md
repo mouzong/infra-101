@@ -315,4 +315,12 @@ spec:
 ```bash
 # Cretae a pod and a service associated to it in one shot
 kubectl run httpd --image=httpd:alpine --port=80 --expose=true
-````
+```
+### Kubectl Apply 
+When you use the `kubectl apply -f` to create resource from a local manifest file, there is a copy of the last version of the resource recently created stored in memory. </br>
+
+![kubectl apply -f](img/last-applied.png)
+
+It is advicable to use `kubectl apply -f` instead of `kubctl create -f`.
+
+![last-applied](img/last-applied-location.png)
