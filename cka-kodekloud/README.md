@@ -326,3 +326,10 @@ It is advicable to use `kubectl apply -f` instead of `kubctl create -f`.
 ![last-applied](img/last-applied-location.png)
 
 ref: https://github.com/kodekloudhub/certified-kubernetes-administrator-course
+
+### Scheduling
+The scheduler is responsible for the assigning of pods to nodes
+There are two modes of scheduling : `manual` & `automated`
+
+#### Manual Scheduling
+When you create a pod in the CLuster, check whether or not the scheduler is present and well setup. This in case the pod remains in pending state.
