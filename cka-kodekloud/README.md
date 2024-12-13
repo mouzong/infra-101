@@ -324,3 +324,5 @@ When you use the `kubectl apply -f` to create resource from a local manifest fil
 It is advicable to use `kubectl apply -f` instead of `kubctl create -f`.
 
 ![last-applied](img/last-applied-location.png)
+
+ref: https://github.com/kodekloudhub/certified-kubernetes-administrator-course
