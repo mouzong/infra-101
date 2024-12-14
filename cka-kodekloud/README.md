@@ -387,3 +387,45 @@ Node selectors are assigned to PODs in order to bind them on a specific node whe
 kubectl label nodes <node-name> <label-key>=<label-value>
 
 ```
+
+```yaml
+# pod-definition
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+
+spec:
+  containers:
+    - name: data-processing
+      image: data-processing
+
+  nodeSelector:
+    size: Large
+```
+
+### Node affinity
+Node affinity provides advanced capabilities to limit pod placement on nodes
+
+```yaml
+# pod-definition
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+
+spec:
+  containers:
+    - name: data-processing
+      image: data-processing
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulinIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: size
+                operator: In
+                values:
+                  - Large
+```
