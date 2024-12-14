@@ -326,15 +326,15 @@ It is advicable to use `kubectl apply -f` instead of `kubctl create -f`.
 ![last-applied](img/last-applied-location.png)
 
 ref: https://github.com/kodekloudhub/certified-kubernetes-administrator-course
-
-### Scheduling
+---
+## 2 - Scheduling
 The scheduler is responsible for the assigning of pods to nodes
 There are two modes of scheduling : `manual` & `automated`
 
-#### Manual Scheduling
+### Manual Scheduling
 When you create a pod in the CLuster, check whether or not the scheduler is present and well setup. This in case the pod remains in pending state.
 
-#### Labels & Selectors
+### Labels & Selectors
 Labels are assigned to objects when creating them and selectors a re used to retriev the labels based on the match.
 
 ```bash
@@ -378,4 +378,12 @@ spec:
       operator: "Equal"
       value: "blue"
       effect: "NoSchedule"
+```
+
+### Node Selectors
+Node selectors are assigned to PODs in order to bind them on a specific node when scheduling. Before a node selector value can added to the pod definition, the node needs to be labled :
+
+```bash
+kubectl label nodes <node-name> <label-key>=<label-value>
+
 ```
