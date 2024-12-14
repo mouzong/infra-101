@@ -334,12 +334,48 @@ There are two modes of scheduling : `manual` & `automated`
 #### Manual Scheduling
 When you create a pod in the CLuster, check whether or not the scheduler is present and well setup. This in case the pod remains in pending state.
 
-### Labels & Selectors
+#### Labels & Selectors
 Labels are assigned to objects when creating them and selectors a re used to retriev the labels based on the match.
 
 ```bash
 # get all pods in the frontend tier
-kubectl get pods -l tier=frontend
+kubectl get pods -l tier=frontend --no-headers
 
-kubectl get pods --selector tier=frontend
+kubectl get pods --selector tier=frontend --no-headers
+```
+
+#### Taints & Tolerations
+Taints and tolerations are used to set restrictions on what pods can be scheduled on which node
+
+```bash
+# How to taint any node in a cluster : taint-effect = [NoSchedule | PreferNoSchedule | NoExecute]
+kubectl taint nodes node-name key=value:taint-effect
+
+# example :
+kubectl taint nodes node01 app=blue:NoSchedule
+
+# remove taint from a node
+kubectl taint nodes node01 app=blue:NoSchedule-
+
+# to remove a taint from a node you apply the same commnd used to put a taint and add hiphen at the end `-`
+```
+The taint effect determines what happens to the POD that DO NOT TOLERATE this taint.
+
+Toleration are added to the pods in order to get it scheduled on the tainted node
+
+```yaml
+# pod-definition.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+  tolerations:
+    - key: "app"
+      operator: "Equal"
+      value: "blue"
+      effect: "NoSchedule"
 ```
