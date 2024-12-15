@@ -429,3 +429,19 @@ spec:
                 values:
                   - Large
 ```
+
+##### lab - Node, Selectors, Affinity
+
+````bash
+# get all labels in a node
+kubectl get node node01 -o jsonpath='{.metadata.labels}' | jq
+
+# Get the number of labels on the node01
+kubectl get node node01 -o jsonpath='{.metadata.labels}' | jq 'keys | length'
+
+# get the value of the label kubernetes.io/hostname from node01
+kubectl get node node01 -o json | jq -r '.metadata.labels["kubernetes.io/hostname"]'
+
+# Count the number of files in the static pods folder excluding folders and hidden files
+find /etc/kubernetes/manifests/ -type f ! -name ".*" | wc -l
+```
