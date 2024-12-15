@@ -432,7 +432,7 @@ spec:
 
 ##### lab - Node, Selectors, Affinity
 
-````bash
+```bash
 # get all labels in a node
 kubectl get node node01 -o jsonpath='{.metadata.labels}' | jq
 
@@ -445,3 +445,5 @@ kubectl get node node01 -o json | jq -r '.metadata.labels["kubernetes.io/hostnam
 # Count the number of files in the static pods folder excluding folders and hidden files
 find /etc/kubernetes/manifests/ -type f ! -name ".*" | wc -l
 ```
+
+### Resource Requirements
