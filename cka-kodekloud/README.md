@@ -541,4 +541,13 @@ spec:
 The easiest way to deploy a DaemonSet is to `--dry-run` the creation of a Deployment then changindg the kind from Deployment to DaemonSet. After what delete the `strategy`, `reousrce`, `replicas`
 
 ### Static Pods
-Static pods definition files are stored by default in the folder `/etc/kubernetes/manifests`. They pods created by the kubelet daemon. This folder could be any folder on the system, the folder should be set in the `kubelet.service` definition as `--pod-manifest-path` variable. To check this you should inpect the kubelet service 
+Static pods definition files are stored by default in the folder `/etc/kubernetes/manifests`. They pods created by the kubelet daemon. This folder could be any folder on the system, the folder should be set in the `kubelet.service` definition as `--pod-manifest-path=/etc/kubernetes/manifests` variable. To check this you should inpect the kubelet service `ps aux | grep kubelet`, the search for the variable `--config`. </br>
+
+You could also define a varibale `--config=kubeconfig.yaml` in the kubelet.service the inside the `kubeconfig.yaml` set the variable `staticPodPath: /etc/kubernetes/manifests` or to any folder you want to use as directory to store the static pod definition files.</br>
+
+To view the static pods, use the command: `docker ps`
+
+```bash
+# run a pod with command arguments
+kubectl run static-busybox --image busybox --dry-run=client -o yaml > busy.yaml -- sleep 1000
+```
