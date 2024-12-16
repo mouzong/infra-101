@@ -539,3 +539,6 @@ spec:
 ```
 
 The easiest way to deploy a DaemonSet is to `--dry-run` the creation of a Deployment then changindg the kind from Deployment to DaemonSet. After what delete the `strategy`, `reousrce`, `replicas`
+
+### Static Pods
+Static pods definition files are stored by default in the folder `/etc/kubernetes/manifests`. They pods created by the kubelet daemon. This folder could be any folder on the system, the folder should be set in the `kubelet.service` definition as `--pod-manifest-path` variable. To check this you should inpect the kubelet service 
