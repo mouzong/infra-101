@@ -550,6 +550,8 @@ To view the static pods, use the command: `docker ps`
 ```bash
 # run a pod with command arguments
 kubectl run static-busybox --image busybox --dry-run=client -o yaml > busy.yaml -- sleep 1000
+
+kubectl run static-busybox --image busybox --dry-run=client -o yaml > busy.yaml --command -- sleep 1000
 ```
 
 - ps : To verify if a pod is static or not you can check the pod definition from the running instance and check the owner section. If the owner is a Node then it is a Static pod.
