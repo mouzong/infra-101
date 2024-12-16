@@ -447,3 +447,41 @@ find /etc/kubernetes/manifests/ -type f ! -name ".*" | wc -l
 ```
 
 ### Resource Requirements
+Resources determine the amount of CPU and RAM used by  the containers in a pod.
+To specifiy the resources in a pod you add section `resources:` in the `spec:` section of the pod definition file
+
+```yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+spec:
+  containers:
+  - name: app
+    image: images.my-company.example/app:v4
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  - name: log-aggregator
+    image: images.my-company.example/log-aggregator:v6
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+```
+
+It sis possible to set the limit range of resources for cpu and memory at the namespace level, this restricts the limits consumed by pods.
+
+you can extract the pod defintion in YAML format using the command
+
+```bash
+kubectl get pod webapp -o yaml >&nbsp;my-new-pod.yaml
+```
