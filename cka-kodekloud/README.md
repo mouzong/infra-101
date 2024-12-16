@@ -483,5 +483,5 @@ It sis possible to set the limit range of resources for cpu and memory at the na
 you can extract the pod defintion in YAML format using the command
 
 ```bash
-kubectl get pod webapp -o yaml >&nbsp;my-new-pod.yaml
+kubectl get pod webapp -o yaml > my-new-pod.yaml
 ```
