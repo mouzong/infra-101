@@ -570,3 +570,20 @@ kubectl run static-busybox --image busybox --dry-run=client -o yaml > busy.yaml 
   - https://jvns.ca/blog/2017/07/27/how-does-the-kubernetes-scheduler-work/
 
   - https://stackoverflow.com/questions/28857993/how-does-kubernetes-scheduler-work
+
+  ---
+## 3 - Logging And Monitoring
+  
+### Monitoring Cluster Components
+Kubernetes doesn't have a highly performant metrics management system, it instead has metrics-server inbuilt which collects metrics and aggregates them in-memory with the help of `cAdvisor` from the kubelet. </br>
+
+In minikube you can run the command `minikube addons enable metrics-server` to activate the metrics server in your local minikube cluster.
+
+
+```bash
+# view the performance metrics (cpu and memory consumption of nodes)
+kubectl top node
+
+# View the performance metrics of the pods in a current namespace
+kubectl top pod
+```
