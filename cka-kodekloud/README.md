@@ -557,3 +557,16 @@ kubectl run static-busybox --image busybox --dry-run=client -o yaml > busy.yaml 
 - ps : To verify if a pod is static or not you can check the pod definition from the running instance and check the owner section. If the owner is a Node then it is a Static pod.
 
 ### Multiple Schedulers
+
+### Scheduler Profiles
+
+
+##### Ref:
+
+  - https://github.com/kubernetes/community/blob/master/contributors/devel/sig-scheduling/scheduling_code_hierarchy_overview.md
+
+  - https://kubernetes.io/blog/2017/03/advanced-scheduling-in-kubernetes/
+
+  - https://jvns.ca/blog/2017/07/27/how-does-the-kubernetes-scheduler-work/
+
+  - https://stackoverflow.com/questions/28857993/how-does-kubernetes-scheduler-work
