@@ -587,3 +587,18 @@ kubectl top node
 # View the performance metrics of the pods in a current namespace
 kubectl top pod
 ```
+
+### Managing Application Logs
+To view the logs in kubernetes you do `kubectl logs -f <pod-name> [<contianer-name>]`.
+if you have only one container in a pod you view the logs in the following way:
+
+```bash
+# get logs of a pod containing a single container
+kubectl logs -f pod-name
+```
+
+When a pod has multiple containers we view the logs by specifying the container name:
+
+```bash
+kubectl logs -f pod-name container-name
+```
