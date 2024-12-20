@@ -602,3 +602,23 @@ When a pod has multiple containers we view the logs by specifying the container 
 ```bash
 kubectl logs -f pod-name container-name
 ```
+---
+## 4 - Application Lifecycle management
+
+### Application Commands
+
+In containers when passing commands you can either use the `CMD` or `ENTRYPOINT` or both. The difference between the two lies on the fact that ``ENTRYPOINT`` is the default command that runs at startup and ``CMD`` can either be a command that runs at startup if it is used alone in the ``Dockerfile``, it can be over written at the run time when specifying the new commd to run.
+
+```dockerfile
+FROM ubuntu
+
+# Command run by default at startup
+ENTRYPOINT ["sleep"]
+
+# Default parameter of the command
+CMD ["5"]
+```
+
+In a kubernetes pod definition file we have the following equivalence :
+  - `command:` == `ENTRYPOINT`
+  - `args:` == `CMD`
