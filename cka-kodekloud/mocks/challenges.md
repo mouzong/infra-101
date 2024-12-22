@@ -5,11 +5,22 @@
 ```bash
 sudo apt update
 
-sudo apt instal etcd-client -y
+sudo apt install etcd-client -y
+
+etcdctl snapshot
 ```
 
 - Set the environment variables requirement for the etcdctl utility tools to work best
 ```bash
+
+cat >> ~/.vimrc << EOF
+syntax on
+set ts=2 sts=2 sw=2 et nu ai cuc cul termguicolors
+colorscheme dracula
+filetype plugin indent on
+EOF
+
+source ~/.vimrc
 
 cat >> /etc/environment << EOF
 ENDPOINT=https://127.0.0.1:2379
@@ -18,6 +29,14 @@ ETCDCTL_CACERT=/etc/kubernetes/pki/etcd/ca.crt
 ETCDCTL_CERT=/etc/kubernetes/pki/etcd/server.crt
 ETCDCTL_KEY=/etc/kubernetes/pki/etcd/server.key
 EOF
+
+source  /etc/environment
+```
+
+```bash
+ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 \
+  --cacert=<trusted-ca-file> --cert=<cert-file> \ --key=<key-file> \
+  snapshot save <backup-file-location>
 ```
 
 ```bash
@@ -29,4 +48,23 @@ etcdctl --endpoints=https://127.0.0.1:2379 \
     --key=/etc/kubernetes/pki/etcd/server.key \
     snapshot save /opt/etcd-backup.db
 
+etcdctl --endpoints=$ENDPOINT snapshot save /opt/etcd-backup.db
+
+# verify the status of the snapshot
+etcdctl --write-out=table snapshot status /opt/etcd-backup.db
+
 ```
+
+## Restore ETCD
+
+```bash
+# Stop all api-servers and restart kube-scheduler, kube-controller-manager, kubelet instances 
+
+# stopping all 
+sudo mv /etc/kubernetes/manifests/*.yaml /tmp
+
+sudo systemctl daemon reload
+
+sudo systemctl restart kubelet
+```
+
