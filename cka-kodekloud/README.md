@@ -742,3 +742,6 @@ kubectl cordon node-01
 # operate the OS upgrade then
 kubectl uncordon node-01 
 ```
+
+### Kubernetes Software Version
+
