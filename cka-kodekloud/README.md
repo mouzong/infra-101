@@ -720,5 +720,10 @@ spec:
     image: busybox:1.28 
     command: ['sh', '-c', 'until nslookup mydb; do echo waiting for mydb; sleep 2; done;']
 ```
-
+```bash
+# get then logs of the init container in the orange pods
+k logs orange -c init-myservice
+```
 Read more about initContainers here. And try out the upcoming practice test.
+
+## 5 - Cluster Maintenance
