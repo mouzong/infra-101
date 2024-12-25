@@ -668,7 +668,7 @@ spec:
 
 In a multi-container pod, each container is expected to run a process that stays alive as long as the POD's lifecycle.
 
-For example in the multi-container pod that we talked about earlier that has a web application and logging agent, both the containers are expected to stay alive at all times.
+For example in the `multi-container` pod that we talked about earlier that has a web application and logging agent, both the containers are expected to stay alive at all times.
 
 The process running in the log agent container is expected to stay alive as long as the web application is running. If any of them fail, the POD restarts.
 
@@ -697,7 +697,7 @@ spec:
 ```
 When a POD is first created the `initContainer` is run, and the process in the `initContainer` must run to a completion before the real container hosting the application starts.
 
-You can configure multiple such `initContainers` as well, like how we did for multi-containers pod. In that case, each init container is run one at a time in sequential order.
+You can configure multiple such `initContainers` as well, like how we did for `multi-containers` pod. In that case, each init container is run one at a time in sequential order.
 
 If any of the `initContainers` fail to complete, Kubernetes restarts the Pod repeatedly until the Init Container succeeds. 
 
