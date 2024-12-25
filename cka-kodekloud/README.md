@@ -655,8 +655,7 @@ spec:
   - name: mysql-db
     image: mysql:8.0.40
     env:
-      secretRef:
-        
+      secretRef:      
 
 ```
 
@@ -666,7 +665,7 @@ spec:
 
 ### Init Containers
 
-In a multi-container pod, each container is expected to run a process that stays alive as long as the POD's lifecycle.
+In a `multi-container` pod, each container is expected to run a process that stays alive as long as the POD's lifecycle.
 
 For example in the `multi-container` pod that we talked about earlier that has a web application and logging agent, both the containers are expected to stay alive at all times.
 
