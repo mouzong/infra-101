@@ -727,3 +727,5 @@ k logs orange -c init-myservice
 Read more about initContainers here. And try out the upcoming practice test.
 
 ## 5 - Cluster Maintenance
+
+### OS Upgrades
