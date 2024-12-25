@@ -729,3 +729,16 @@ Read more about initContainers here. And try out the upcoming practice test.
 ## 5 - Cluster Maintenance
 
 ### OS Upgrades
+When performing OS upgrade in a cluster you need to follow the steps below in order to have a coherent state of your cluster after you have finished the upgrade.
+
+For example if you want to upgrade a node-01 let's say : 
+
+```bash
+# make the node unscedulable 
+kubectl drain node-01
+
+kubectl cordon node-01
+
+# operate the OS upgrade then
+kubectl uncordon node-01 
+```
