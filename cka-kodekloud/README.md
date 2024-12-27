@@ -745,3 +745,14 @@ kubectl uncordon node-01
 
 ### Kubernetes Software Version
 
+```yaml
+kube-apiserver : [ v(N) ]
+
+Controller-manager | kube-scheduler : [ v(N) | v(N-1) ]
+
+kubelet | kube-proxy : [ v(N) | v(N-1) | v(N-2) ]
+
+kubectl : [ v(N+1) - v(N-1) ]
+```
+
+

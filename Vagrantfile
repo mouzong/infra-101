@@ -5,8 +5,20 @@
 Vagrant.configure("2") do |config|
   
 
-  # master01 Server configuration
-  config.vm.define "master01" do |master|
+  # admin Server configuration
+  config.vm.define "admin-vm" do |admin|
+    master.vm.box = "ubuntu/focal64"
+    master.vm.hostname = "admin-vm"
+    master.vm.network :private_network, ip: "192.168.50.10"
+    master.vm.provider "virtualbox" do |vb|
+      vb.name = "admin-vm"
+      vb.memory = 2048
+      vb.cpus = 2
+    end
+  end
+
+   # master01 Server configuration
+   config.vm.define "master01" do |master|
     master.vm.box = "ubuntu/focal64"
     master.vm.hostname = "master01"
     master.vm.network :private_network, ip: "192.168.50.11"
