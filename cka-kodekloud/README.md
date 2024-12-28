@@ -794,3 +794,13 @@ Since our ETCD database is TLS-Enabled, the following options are mandatory:
 ``–key``                 identify secure client using this TLS key file
 
 For a detailed explanation on how to make use of the etcdctl command line tool and work with the -h flags, check out the solution video for the Backup and Restore Lab.
+
+### Working with multiple clusters
+
+```bash
+# List all cluster available 
+kubectl config get-clusters
+
+# Set a cluster (cluster1) for the current context
+kubectl config use-context cluster1
+```
