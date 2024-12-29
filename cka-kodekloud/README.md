@@ -803,6 +803,9 @@ kubectl config get-clusters
 
 # Set a cluster (cluster1) for the current context
 kubectl config use-context cluster1
+
+# Get all contexts in a cluster
+kubectl config view
 ```
 
 https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster
