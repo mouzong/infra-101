@@ -804,3 +804,4 @@ kubectl config get-clusters
 # Set a cluster (cluster1) for the current context
 kubectl config use-context cluster1
 ```
+

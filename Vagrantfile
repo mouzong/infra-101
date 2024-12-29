@@ -77,13 +77,13 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  # node03 Server configuration
-  config.vm.define "node03" do |node|
-    node.vm.box = "ubuntu/focal64"
-    node.vm.hostname = "node03"
-    node.vm.network :private_network, ip: "192.168.50.16"
-    node.vm.provider "virtualbox" do |vb|
-      vb.name = "node03"
+  # ha-proxy Server configuration
+  config.vm.define "ha-proxy" do |ha|
+    ha.vm.box = "ubuntu/focal64"
+    ha.vm.hostname = "ha-proxy"
+    ha.vm.network :private_network, ip: "192.168.50.16"
+    ha.vm.provider "virtualbox" do |vb|
+      vb.name = "ha-proxy"
       vb.memory = 2048
       vb.cpus = 2
     end
