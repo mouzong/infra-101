@@ -805,3 +805,5 @@ kubectl config get-clusters
 kubectl config use-context cluster1
 ```
 
+https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#backing-up-an-etcd-cluster
+
