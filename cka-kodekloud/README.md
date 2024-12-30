@@ -1089,4 +1089,9 @@ spec:
 
  - `kubectl certificate deny user2` : Reject the CSR object for user2
 
+### KubeConfig
+ `kubectl config view`
 
+ `kubectl config --kubeconfig=/toot/custom-config use-context <context-name>` : set a context for custom config file
+
+ `kubectl config --kubeconfig=/toot/custom-config current-context` : print the current context
