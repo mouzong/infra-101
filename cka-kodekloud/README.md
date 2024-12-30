@@ -1053,7 +1053,9 @@ openssl x509 -req -in kubelet.csr -CA ca.crt -CAkey ca.key -out kubelet.crt
 
 ### Viewing Certificates Details
 
-`openssl -x509 in cert.pem -text -noout` : [cluster cert detail view tools](https://github.com/mmumshad/kubernetes-the-hard-way/tree/master/tools)
+`openssl x509 in cert.pem -text -noout` : [cluster cert detail view tools](https://github.com/mmumshad/kubernetes-the-hard-way/tree/master/tools)
+
+In case your cluster commands are no longer working uses the `crictl ps -a`, then `crictl logs <container-id>`tool to investigate the containers in the pods. 
 
 
 
