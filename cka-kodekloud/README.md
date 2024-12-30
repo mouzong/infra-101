@@ -950,3 +950,15 @@ openssl req -new -key scheduler.key -subj "/CN=kube-scheduler" -out scheduler.cs
 
 openssl x509 -req -in scheduler.csr -CA ca.crt -CAkey ca.key -out scheduler.crt
 ```
+
+```bash
+# Client Certficate (Kube Congtroller Manager)
+openssl genrsa -out controller-manager.key 2048
+
+openssl req -new -key controller-manager.key -subj "/CN=kube-controller-manager" -out controller-manager.csr
+
+openssl x509 -req -in controller-manager.csr -CA ca.crt -CAkey ca.key -out controller-manager.crt
+```
+
+
+
