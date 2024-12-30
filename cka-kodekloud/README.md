@@ -1058,5 +1058,35 @@ openssl x509 -req -in kubelet.csr -CA ca.crt -CAkey ca.key -out kubelet.crt
 In case your cluster commands are no longer working uses the `crictl ps -a`, then `crictl logs <container-id>`tool to investigate the containers in the pods. 
 
 
+### Certificates API
+ #### How to generate signing certificates for user in a team
+
+ - Generate CSR and KEY
+ - `cat user.csr | base64 -w 0`
+
+ ```yaml
+ # user-csr.yaml
+ # user certificate signing request definition file
+ ---
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: akshay
+spec:
+  groups:
+  - system:authenticated
+  request: <Paste the base64 encoded value of the CSR file>
+  signerName: kubernetes.io/kube-apiserver-client
+  usages:
+  - client auth
+ ```
+
+ - `kubectl apply -f user-csr.yaml`
+
+ - `kubectl certificate approve user` : Approve the CSR object for user
+
+ - `kubectl get csr` : Get all CSRs in the cluster
+
+ - `kubectl certificate deny user2` : Reject the CSR object for user2
 
 
