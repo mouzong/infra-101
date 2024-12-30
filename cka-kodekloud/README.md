@@ -1051,6 +1051,10 @@ openssl req -new -key kubelet.key -subj "/CN=kubelet/O=system:node:node01" -out 
 openssl x509 -req -in kubelet.csr -CA ca.crt -CAkey ca.key -out kubelet.crt
 ```
 
+### Viewing Certificates Details
+
+`openssl -x509 in cert.pem -text -noout` : [cluster cert detail view tools](https://github.com/mmumshad/kubernetes-the-hard-way/tree/master/tools)
+
 
 
 
