@@ -1092,9 +1092,9 @@ spec:
 ### KubeConfig
  `kubectl config view`
 
- `kubectl config --kubeconfig=/toot/custom-config use-context <context-name>` : set a context for custom config file
+ `kubectl config --kubeconfig /root/custom-config use-context <context-name>` : set a context for custom config file
 
- `kubectl config --kubeconfig=/toot/custom-config current-context` : print the current context
+ `kubectl config --kubeconfig /root/custom-config current-context` : print the current context
 
 - How to set the 
  ```bash 
@@ -1103,4 +1103,66 @@ spec:
  export KUBECONFIG=/root/my-kube-config
 
  source ~/.bashrc
+ ```
+
+ ### RBAC in K8S
+
+ `kubectl auth can-i create deployements`
+
+ ```yaml
+ apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: dev-user-role
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "create", "delete"]
+ ```
+
+ ```yaml
+ apiVersion: rbac.authorization.k8s.io/v1
+# This role binding allows "jane" to read pods in the "default" namespace.
+# You need to already have a Role named "pod-reader" in that namespace.
+kind: RoleBinding
+metadata:
+  name: developer-rb
+  namespace: default
+subjects:
+# You can specify more than one "subject"
+- kind: User
+  name: andreas # "name" is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  # "roleRef" specifies the binding to a Role / ClusterRole
+  kind: Role #this must be Role or ClusterRole
+  name: developer-role # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
+ ```
+
+ ```yaml
+ apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+  namespace: blue
+rules:
+- apiGroups:
+  - apps
+  resourceNames:
+  - dark-blue-app
+  resources:
+  - pods
+  verbs:
+  - get
+  - watch
+  - create
+  - delete
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - create
  ```
