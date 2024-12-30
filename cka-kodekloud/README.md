@@ -918,6 +918,9 @@ Once created, you may authenticate into the kube-api server using the users cred
 A certificate is used to guarantee trust between two parties in a transaction.
 
 ### Generating certs for the cluster
+
+We start by generating self signed certificates for the CA of the cluster 
+
 ```bash
 # generate the private key for Certificate Authority
 openssl genrsa -out ca.key 2048
@@ -927,4 +930,23 @@ openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
 
 # Sign the certificate with the provate key generated 
 openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
+```
+
+- Generate the client certs
+```bash
+# Client Certficate (Admin User)
+openssl genrsa -out admin.key 2048
+
+openssl req -new -key admin.key -subj "/CN=kube-admin/O=system:masters" -out admin.csr
+
+openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
+```
+
+```bash
+# Client Certficate (Kube Scheduler)
+openssl genrsa -out scheduler.key 2048
+
+openssl req -new -key scheduler.key -subj "/CN=kube-scheduler" -out scheduler.csr
+
+openssl x509 -req -in scheduler.csr -CA ca.crt -CAkey ca.key -out scheduler.crt
 ```
