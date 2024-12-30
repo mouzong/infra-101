@@ -1029,6 +1029,28 @@ openssl req -new -key apiserver-etcd-client.key -subj "/CN=kube-apiserver-etcd-c
 openssl x509 -req -in apiserver-etcd-client.csr -CA ca.crt -CAkey ca.key -out apiserver-etcd-client.crt
 ```
 
+#### Kubelet Certficates Generation
+The kubelet server needs two series of certficates:
+- kubelet-client :  Used to connect and talk to the kube-apiserver
+- kubelet : Used to authenticate on any other request wihtin the cluster and node management
+
+```bash
+# Client Certficate (Kubelet Client)
+openssl genrsa -out kubelet-client.key 2048
+
+openssl req -new -key kubelet-client.key -subj "/CN=kubelet/O=system:node:node01" -out kubelet-client.csr
+
+openssl x509 -req -in kubelet-client.csr -CA ca.crt -CAkey ca.key -out kubelet-client.crt
+```
+```bash
+# Server Certficate (Kubelet Server)
+openssl genrsa -out kubelet.key 2048
+
+openssl req -new -key kubelet.key -subj "/CN=kubelet/O=system:node:node01" -out kubelet.csr
+
+openssl x509 -req -in kubelet.csr -CA ca.crt -CAkey ca.key -out kubelet.crt
+```
+
 
 
 
