@@ -1165,4 +1165,12 @@ rules:
   - deployments
   verbs:
   - create
+
+ ```
+
+
+ ```bash
+ kubectl create role developer --verb=list,delete,create --resource=pods
+
+ kubectl create rolebinding dev-user-binding --user=dev-user --role=developer
  ```
