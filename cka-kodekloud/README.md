@@ -1095,3 +1095,12 @@ spec:
  `kubectl config --kubeconfig=/toot/custom-config use-context <context-name>` : set a context for custom config file
 
  `kubectl config --kubeconfig=/toot/custom-config current-context` : print the current context
+
+- How to set the 
+ ```bash 
+ vi ~/.bashrc
+
+ export KUBECONFIG=/root/my-kube-config
+
+ source ~/.bashrc
+ ```
