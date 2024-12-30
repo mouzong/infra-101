@@ -932,7 +932,7 @@ openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
 openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
 ```
 
-- Generate the client certs
+#### Generate the client certs
 ```bash
 # Client Certficate (Admin User)
 openssl genrsa -out admin.key 2048
@@ -968,4 +968,67 @@ openssl req -new -key kube-proxy.key -subj "/CN=kube-proxy" -out kube-proxy.csr
 
 openssl x509 -req -in kube-proxy.csr -CA ca.crt -CAkey ca.key -out kube-proxy.crt
 ```
+
+#### Generate server side certifcates (ETCD, KUBE-APISERVER, KUBELET)
+```bash
+# Client Certficate (ETCD)
+openssl genrsa -out etcdserver.key 2048
+
+openssl req -new -key etcdserver.key -subj "/CN=ETCD-SERVER" -out etcdserver.csr
+
+openssl x509 -req -in etcdserver.csr -CA ca.crt -CAkey ca.key -out etcdserver.crt
+```
+
+When generating certificates for the kube-apiserver we need to be more meticulous because the kubeiapiserver is the heart of kubernetes. it is sometime refered to as many names amongst which we have :
+- kubernetes
+- kubernetes.default
+- kubernetes.default.svc
+- kubernetes.default.svc.cluster.local
+
+```conf
+[req]
+req_extensions = v3_req
+distinguished_name = reqdistinguished_name
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = kubernetes
+DNS.2 = kubernetes.default
+DNS.3 = kubernetes.default.svc
+DNS.4 = kubernetes.default.svc.cluster.local
+IP.1 = 10.96.0.1
+IP.2 = 172.17.0.87 
+```
+
+```bash
+# Client Certficate (KUBE-APISERVER)
+openssl genrsa -out apiserver.key 2048
+
+openssl req -new -key apiserver.key -subj "/CN=kube-apiserver" -config openssl.cnf -out apiserver.csr
+
+openssl x509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -out apiserver.crt
+```
+
+```bash
+# Client Certficate (KUBE-APISERVER KUBELET CLIENT CERTS)
+openssl genrsa -out apiserver-kubelet-client.key 2048
+
+openssl req -new -key apiserver-kubelet-client.key -subj "/CN=kube-apiserver-kubelet-client" -out apiserver-kubelet-client.csr
+
+openssl x509 -req -in apiserver-kubelet-client.csr -CA ca.crt -CAkey ca.key -out apiserver-kubelet-client.crt
+```
+
+```bash
+# Client Certficate (KUBE-APISERVER ETCD CLIENT CERTS)
+openssl genrsa -out apiserver-etcd-client.key 2048
+
+openssl req -new -key apiserver-etcd-client.key -subj "/CN=kube-apiserver-etcd-client" -out apiserver-etcd-client.csr
+
+openssl x509 -req -in apiserver-etcd-client.csr -CA ca.crt -CAkey ca.key -out apiserver-etcd-client.crt
+```
+
+
+
 
