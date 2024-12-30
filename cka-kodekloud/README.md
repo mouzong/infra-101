@@ -960,5 +960,12 @@ openssl req -new -key controller-manager.key -subj "/CN=kube-controller-manager"
 openssl x509 -req -in controller-manager.csr -CA ca.crt -CAkey ca.key -out controller-manager.crt
 ```
 
+```bash
+# Client Certficate (Kube-Proxy)
+openssl genrsa -out kube-proxy.key 2048
 
+openssl req -new -key kube-proxy.key -subj "/CN=kube-proxy" -out kube-proxy.csr
+
+openssl x509 -req -in kube-proxy.csr -CA ca.crt -CAkey ca.key -out kube-proxy.crt
+```
 
