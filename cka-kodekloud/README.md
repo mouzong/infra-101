@@ -913,3 +913,18 @@ roleRef:
 Once created, you may authenticate into the kube-api server using the users credentials
 
 ``curl -v -k https://localhost:6443/api/v1/pods -u "user1:password123"``
+
+### TLS Basics
+A certificate is used to guarantee trust between two parties in a transaction.
+
+### Generating certs for the cluster
+```bash
+# generate the private key for Certificate Authority
+openssl genrsa -out ca.key 2048
+
+# Generate the Certificcate Signing Request CSR
+openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
+
+# Sign the certificate with the provate key generated 
+openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
+```
