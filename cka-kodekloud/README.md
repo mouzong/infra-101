@@ -1303,3 +1303,36 @@ In Kubernetes User Accounts are set for human being who access the cluster and S
 `kubectl create serviceaccount jenkins` : Create a Service Account named Jenkins </br>
 
 `kubectk create token jenkins` :  Create an access token for the jenkins service account. The acess token cretaed imperativeley this way has a default validity of 1hour from the time it is created.
+
+### Image Security
+ By default in kubernetes images are pulled the docker.io/library. You may need to secure the source of your images by creating your private registry into which you pushed your app images and then connect your registry.
+
+ `docker login private-registry.io` : login to the private registry
+
+ `docker run private-registry.io/apps/internal-app` : Run an internal app from our private-registry.io image using docker run mode.
+ 
+ The connexion of the private registry with the kubernetes cluster is done in several steps:
+ - First you cretae a docker-registry secret object which contains the credentials for authe tication againts the private registry :
+
+ ```bash
+ kubectl create create secret docker-registry regcred \
+   --docker-server=private-registry.io \
+   --docker-username=regisry-user \
+   --docker-password=registry-password \ 
+   --docker-email=registry.email@private-registry.io 
+ ```
+
+- Then you plug the secret in the POD under the section `imagePullSecrets` in POD `spec:` defintionmanifest file
+
+ ```yaml
+ apiVersion: v1
+ kind: Pod
+ metadata:
+   name: nginx-pod
+ spec:
+   containers:
+     - name: nginx-pod
+       image: private-registry.io/apps/internal-app
+   imagePullSecrets:
+     - name: regcred 
+ ``` 
