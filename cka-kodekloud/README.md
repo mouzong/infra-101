@@ -1304,6 +1304,10 @@ In Kubernetes User Accounts are set for human being who access the cluster and S
 
 `kubectk create token jenkins` :  Create an access token for the jenkins service account. The acess token cretaed imperativeley this way has a default validity of 1hour from the time it is created.
 
+```bash 
+kubectl set serviceaccount deploy/web-dashboard dashboard-sa
+```
+
 ### Image Security
  By default in kubernetes images are pulled the docker.io/library. You may need to secure the source of your images by creating your private registry into which you pushed your app images and then connect your registry.
 
@@ -1336,3 +1340,10 @@ In Kubernetes User Accounts are set for human being who access the cluster and S
    imagePullSecrets:
      - name: regcred 
  ``` 
+
+ ### Security Contexts:
+ By default when you spin up a container it runs all its processes in a seperate namespace and these processes run with previledge mode (`root` user). 
+ 
+ The root user having more privileges tha a y other user this situation presents a security threat in case a hacker exploits a container in your system.
+
+ To excalate the privileges in docker imperative mode  
