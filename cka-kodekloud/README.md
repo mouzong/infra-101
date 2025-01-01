@@ -1293,3 +1293,13 @@ To switch to a new namespace:
 To switch back to previous namespace:
 
 `kubens –`
+
+### Service Accounts
+
+In Kubernetes User Accounts are set for human being who access the cluster and Service Accounts are created for application processes management. For example you can have:
+- jenkins-sa for ci/cd related jobs mannagement.
+- prometheus-sa : monitoring process mamangement agent
+
+`kubectl create serviceaccount jenkins` : Create a Service Account named Jenkins </br>
+
+`kubectk create token jenkins` :  Create an access token for the jenkins service account. The acess token cretaed imperativeley this way has a default validity of 1hour from the time it is created.
