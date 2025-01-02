@@ -1233,12 +1233,24 @@ roleRef:
   name: storage-admin
   apiGroup: rbac.authorization.k8s.io
 ```
+you can also create Roles imperatively by using the commands below:
+
+```bash
+# list all resources and their shortnames and apiVersion versions
+kubectl api-resources
+
+# create a clusterrole for user=michelle with access on nodes  
+kubectl create clusterrole michelle-role --verb=get,list,watch --resource=nodes
+
+# create a clusterrolebinding that binds michelle's clusterrole
+kubectl create clusterrolebindind michelle-role-binding --user=michelle --clusterrole=michelle-role
+```
 
 ### kubectx and kubens
 
 Throughout the course, you have had to work on several different namespaces in the practice lab environments. In some labs, you also had to switch between several contexts.
 
-While this is excellent for hands-on practice, in a real “live” Kubernetes cluster implemented for production, there could be a possibility of often switching between a large number of namespaces and clusters.
+While this is excellent for hands-on practice, in a real `live` Kubernetes cluster implemented for production, there could be a possibility of often switching between a large number of namespaces and clusters.
 
 This can quickly become a confusing and overwhelming task if you have to rely on kubectl alone.
 
