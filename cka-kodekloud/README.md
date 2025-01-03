@@ -1379,7 +1379,9 @@ docker run --user=1001 ubuntu sleep 3600
 Similarly you can add exclation on user and rights in the pod or container level when defining the pod definition.
 
 
-Security conteext can be aded both at Pod level or container level depending on the scope of your action.
+Security context can be aded both at Pod level or container level depending on the scope of your action.
+
+`ps: capabilities are only supported at container level NOT at POD level`
 
 ```yaml
 apiVersion: v1
