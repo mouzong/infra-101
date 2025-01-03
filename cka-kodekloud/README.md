@@ -1393,7 +1393,7 @@ spec:
   - name: nginx
     image: nginx
     securityContext:
-      runAs: 1000
+      runAsUser: 1000
       capabilities: 
         add: ["MAC_ADMIN"]
 ```
