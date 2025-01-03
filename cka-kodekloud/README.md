@@ -1437,5 +1437,23 @@ spec:
     ports:
     - protocol: TCP
       port: 5978
+```
 
+## Storage
+
+### Persitent Volumes
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: vol1-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  awsElasticBlockStore:
+    volumeID: <volume-id>
+    fsType: ext4
 ```
