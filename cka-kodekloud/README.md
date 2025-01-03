@@ -1331,7 +1331,7 @@ kubectl set serviceaccount deploy/web-dashboard dashboard-sa
  - First you cretae a docker-registry secret object which contains the credentials for authe tication againts the private registry :
 
  ```bash
- kubectl create create secret docker-registry regcred \
+ kubectl create secret docker-registry regcred \
    --docker-server=private-registry.io \
    --docker-username=regisry-user \
    --docker-password=registry-password \ 
@@ -1353,9 +1353,45 @@ kubectl set serviceaccount deploy/web-dashboard dashboard-sa
      - name: regcred 
  ``` 
 
+```bash
+# full list of linux capabilities for root user
+cat /usr/include/linux/capability.sh
+
+# add rights to the the user running processes in the container 
+docker run --cap-add MAC_ADMIN ubuntu
+
+# Run a container with all the privileges as the host root user
+docker run --privileged ubuntu
+```
+
  ### Security Contexts:
  By default when you spin up a container it runs all its processes in a seperate namespace and these processes run with previledge mode (`root` user). 
  
  The root user having more privileges tha a y other user this situation presents a security threat in case a hacker exploits a container in your system.
 
- To excalate the privileges in docker imperative mode  
+ To excalate the privileges in docker imperative mode  perform the following actions:
+
+```bash
+# 
+docker run --user=1001 ubuntu sleep 3600
+```
+
+Similarly you can add exclation on user and rights in the pod or container level when defining the pod definition.
+
+
+Security conteext can be aded both at Pod level or container level depending on the scope of your action.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    securityContext:
+      runAs: 1000
+      capabilities: 
+        add: ["MAC_ADMIN"]
+```
