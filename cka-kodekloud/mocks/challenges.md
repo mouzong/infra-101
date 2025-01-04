@@ -70,3 +70,11 @@ vim /tmp/etcd/yaml
 
 ```
 
+
+### Question 4
+
+Autoscale a deployment with horizontal Pod Atoscaler 
+
+```bash
+kubectl -n production autoscale deploy frontend --min=3 --max=5 --cpu-percent=80
+```
