@@ -1524,3 +1524,35 @@ Set the packet forwarding on a linux host from one entry to another
 # /etc/sysctl.conf
 net.ipv4.ip_forward = 1
 ```
+
+### DNS In Linux
+
+Set an entry to point to a remote DNS server
+
+```bash
+# /etc/resolv.conf
+nameserver 192.168.1.100
+
+nameserver 8.8.8.8
+```
+
+```bash
+# /etc/hosts
+192.168.1.100  dns-server
+```
+
+to set the preference order in name resolution inside a linux local host edit the `/etc/nsswitch.conf` where `files` refer to the local `/etc/hosts` ans `dns` refer to the `dns sevrer` on the network.
+
+The order of the `hosts:` variable value in this file determines which configuration prevails on the selection for name resolution.
+
+```bash
+# /etc/nsswitch.conf
+...
+hosts:    files   dns
+...
+```
+
+`nslookup google.com` :  Query a hostname from a DNS server only (excluding `/etc/hosts`)
+
+`dig google.com` : Test DNS name resolution
+
