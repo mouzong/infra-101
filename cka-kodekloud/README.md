@@ -1483,3 +1483,44 @@ spec:
 The same is true for ReplicaSets or Deployments. Add this to the pod template section of a Deployment on ReplicaSet.
 
 Reference URL: [https://kubernetes.io/docs/concepts/storage/persistent-volumes/#claims-as-volumes\](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#claims-as-volumes)
+
+## Networking
+
+### Networking Introduction
+```bash
+# listen modified interfacces
+ip link
+
+# show ip adress of the host
+ip addr
+
+# assign IP addresse to the host temporarily
+ip addr add 192.168.1.10/24 dev eth0
+
+# get the ip addresses on host
+ip -br a
+
+# Show routes in the routing table
+route
+
+# add an IP route in the routing table to route all traffic to  192.168.1.0/24 network through the gateway 192.168.2.1
+ip route add 192.168.1.0/24 via 192.168.2.1
+
+
+# route all out ound traffic via the default gateway
+ip route add default via 192.168.2.1 
+
+# route all outbound traffic via the default gateway
+ip route add 0.0.0.0 via 192.168.2.1
+
+# verify if the host is set to forward packets from one network interface to the other.
+cat /proc/sys/net/ipv4/ip_forward
+
+```
+
+Set the packet forwarding on a linux host from one entry to another
+
+```conf
+# /etc/sysctl.conf
+net.ipv4.ip_forward = 1
+```
