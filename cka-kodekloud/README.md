@@ -1494,6 +1494,9 @@ ip link
 # show ip adress of the host
 ip addr
 
+# show all interfaces with bridge
+ip addr show type bridge
+
 # assign IP addresse to the host temporarily
 ip addr add 192.168.1.10/24 dev eth0
 
