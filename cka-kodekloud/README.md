@@ -1612,3 +1612,90 @@ Reference links: –
 
 https://www.weave.works/docs/net/latest/kubernetes/kube-addon/#-installation
 https://github.com/weaveworks/weave/releases
+
+
+### JsonPath
+#### Yaml
+```json
+{
+  42,
+  12,
+  56,
+  23
+}
+
+// reurn all numbers greater than 40
+$[?(@>40)]
+
+
+```
+
+```json
+// cars.json
+{
+    "car": {
+        "color": "blue",
+        "price": "$20,000"
+    },
+    "bus": {
+        "color": "white",
+        "price": "$120,000"
+    }
+}
+```
+
+to print the `bus` information using json path query you perform the following command:
+
+```bash
+cat cars.json | jpath $.bus
+```
+
+result : 
+
+```json
+[
+  {
+    "color": "white",
+    "price": "$120,000"
+  }
+]
+```
+
+```json
+// cars.json
+{
+    "car": {
+        "color": "blue",
+        "price": "$20,000",
+        "wheels": [
+            {
+                "model": "KDJ39848T",
+                "location": "front-right"
+            },
+            {
+                "model": "MDJ39485DK",
+                "location": "front-left"
+            },
+            {
+                "model": "KCMDD3435K",
+                "location": "rear-right"
+            },
+            {
+                "model": "JJDH34234KK",
+                "location": "rear-left"
+            }
+        ]
+    }
+}
+```
+```bash
+# get all wheels 
+cat q5.json | jpath $.car.wheels
+
+
+# get the 3rd wheel from the list of wheels
+cat q5.json | jpath $.car.wheels[2]
+
+# get the wheel model of the 3rd car wheel
+cat q7.json | jpath $.car.wheels[2].model
+```
