@@ -1615,6 +1615,15 @@ https://github.com/weaveworks/weave/releases
 
 
 ### JsonPath
+
+```bash
+# print all the ndes anames and their CPU counts
+kubectl get nodes -o=custom-columns=NODE:.metadata.name, CPU:.status.capacity.cpu
+
+# get all nodes sorted by node names
+kubectl get nodes --sort-by=.metadata.name
+```
+
 #### Yaml
 ```json
 {
