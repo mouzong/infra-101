@@ -2184,9 +2184,16 @@ spec:
         pathType: Prefix
       - backend:
           service:
-            name: watch-service
+            name: video-service
             port:
               number: 8080
         path: /watch
         pathType: Prefix
 ```
+
+- using the command line you can create the same ingress resource as follows:
+
+```bash
+kubectl create ingress ingress-wear-watch -n app-space --rule="/wear=wear-service:8080" --rule="/watch=video-service:8080"
+```
+after what you need to edit the ingress resource with annotations and deactivate the ssl-redirects 
